@@ -7,6 +7,7 @@ from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 from src.logger import logging
 from src.exception import CustomException
+from src.components.data_transformation import DataTransformation,DataTransformationConfig
 
 
 @dataclass
@@ -24,8 +25,6 @@ class DataIngestion:
     def iniitiate_data_ingestion(self):
         try:
             df = pd.read_csv(DATASET_PATH)
-
-            #df = pd.read_csv(os.path.join('C:\Users\shiva\Desktop\project_template\New-Machine-Learning-Modular-Coding-project\Data\finalTrain.csv'))
 
             os.makedirs(os.path.dirname(self.data_ingestion_config.raw_data_path), exist_ok=True)
 
@@ -59,4 +58,5 @@ class DataIngestion:
 if __name__ == "__main__":
     obj = DataIngestion()
     train_data_path,test_data_path=obj.iniitiate_data_ingestion()
-
+    data_transformation = DataTransformation()
+    train_arr, test_arr,_ = data_transformation.inititate_data_transformation(train_data_path, test_data_path)
